@@ -29,13 +29,11 @@ test('Validate the items in the cart match with the added items', async ({ page 
   await item2.locator('.add-to-cart-button').click();
 
   // Step 5: Navigate to the cart
-  await page.click('a[href*="/cart"]'); // Adjust if there's a specific cart link
-  const cartItems = await page.locator('.cart-item .item-title');
+  await page.click('a[href*="/cart"]'); 
+  const cartItem1Title = await page.locator('//*[@id="addtocart-main"]/main/div/div[2]/div[1]/a[2]/div/div/div[1]/div/div[2]/div[1]/span[2]').innerText();
+  const cartItem2Title = await page.locator('//*[@id="addtocart-main"]/main/div/div[2]/div[1]/a[3]/div/div/div[1]/div/div[2]/div[1]/span[2]').innerText();
 
   // Step 6: Validate the items in the cart match with the added items
-  const cartItemTitles = await cartItems.evaluateAll(items => items.map(item => item.textContent?.trim()));
-
-  // Assertions
-  expect(cartItemTitles).toContain(item1Title);
-  expect(cartItemTitles).toContain(item2Title);
+  expect(cartItem1Title).toContain(item1Title);
+  expect(cartItem2Title).toContain(item2Title);
 });
